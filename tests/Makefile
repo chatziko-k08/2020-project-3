@@ -5,6 +5,10 @@
 #
 UsingHashTable_ADTMap_test_OBJS	= ADTMap_test.o $(MODULES)/UsingHashTable/ADTMap.o
 
+# ADTGraph
+#
+# UsingAdjacencyLists_ADTGraph_test_OBJS = ADTGraph_test.o ...
+
 # DiseaseMonitor
 #
 # DiseaseMonitor_test_OBJS = DiseaseMonitor_test.o $(MODULES)/DiseaseMonitor.o ...
