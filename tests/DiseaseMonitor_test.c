@@ -154,6 +154,16 @@ void test_get_records(void) {
 	dm_destroy();
 }
 
+// Εκτελεί τη dm_count_records και ελέγχει ότι επιστρέφει τον ίδιο αριθμό
+// αποτελεσμάτων με την dm_get_records.
+void count_and_test(String disease, String country, Date date_from, Date date_to) {
+	List recs = dm_get_records(disease, country, date_from, date_to);
+	int count = list_size(recs);
+	list_destroy(recs);
+
+	TEST_ASSERT(dm_count_records(disease, country, date_from, date_to) == count);
+}
+
 void test_count_records(void) {
 	dm_init();
 
@@ -162,13 +172,13 @@ void test_count_records(void) {
 		dm_insert_record(&records[i]);	
 
 	// try various search criteria
-	TEST_ASSERT(dm_count_records("Pale Mare", NULL,        NULL,         NULL)         == 6);
-	TEST_ASSERT(dm_count_records(NULL,        "Targaryen", NULL,         NULL)         == 4);
-	TEST_ASSERT(dm_count_records("Pale Mare", "Targaryen", NULL,         NULL)         == 1);
-	TEST_ASSERT(dm_count_records(NULL,        NULL,        "0301-01-01", NULL)         == 9);
-	TEST_ASSERT(dm_count_records(NULL,        NULL,        NULL,         "0297-01-01") == 3);
-	TEST_ASSERT(dm_count_records("Grayscale", NULL,        "0299-01-01", "0300-01-01") == 3);
-	TEST_ASSERT(dm_count_records(NULL,        "Lannister", "0299-01-01", "0301-01-01") == 2);
+	count_and_test("Pale Mare", NULL,        NULL,         NULL        );
+	count_and_test(NULL,        "Targaryen", NULL,         NULL        );
+	count_and_test("Pale Mare", "Targaryen", NULL,         NULL        );
+	count_and_test(NULL,        NULL,        "0301-01-01", NULL        );
+	count_and_test(NULL,        NULL,        NULL,         "0297-01-01");
+	count_and_test("Grayscale", NULL,        "0299-01-01", "0300-01-01");
+	count_and_test(NULL,        "Lannister", "0299-01-01", "0301-01-01");
 
 	dm_destroy();
 }
