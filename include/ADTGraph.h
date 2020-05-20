@@ -20,7 +20,7 @@ typedef struct graph* Graph;
 typedef void (*GraphVisitFunc)(Graph graph, Pointer value);
 
 
-// Δημιουργεί και επιστρέφει ένα γράφο, στο οποίο τα στοιχεία συγκρίνονται με βάση
+// Δημιουργεί και επιστρέφει ένα γράφο, στον οποίο τα στοιχεία συγκρίνονται με βάση
 // τη συνάρτηση compare.
 // Αν destroy_vertex != NULL, τότε καλείται destroy_vertex(vertex) κάθε φορά που αφαιρείται μια κορυφή.
 
@@ -34,7 +34,8 @@ int graph_size(Graph graph);
 
 void graph_insert_vertex(Graph graph, Pointer vertex);
 
-// Επιστρέφει λίστα με όλες τις κορυφές του γράφου
+// Επιστρέφει λίστα με όλες τις κορυφές του γράφου. Η λίστα δημιουργείται σε κάθε
+// κληση και είναι ευθύνη του χρήστη να κάνει list_destroy.
 
 List graph_get_vertices(Graph graph);
 
@@ -54,12 +55,14 @@ void graph_remove_edge(Graph graph, Pointer vertex1, Pointer vertex2);
 
 int graph_get_weight(Graph graph, Pointer vertex1, Pointer vertex2);
 
-// Επιστρέφει λίστα με τους γείτονες μιας κορυφής
+// Επιστρέφει λίστα με τους γείτονες μιας κορυφής. Η λίστα δημιουργείται σε κάθε
+// κληση και είναι ευθύνη του χρήστη να κάνει list_destroy.
 
 List graph_get_adjacent(Graph graph, Pointer vertex);
 
-// Επιστρέφει (σε λίστα) το συντομότερο μονοπάτι ανάμεσα στις κορυφές source
-// και target, ή κενή λίστα αν δεν υπάρχει κανένα μονοπάτι.
+// Επιστρέφει (σε λίστα) το συντομότερο μονοπάτι ανάμεσα στις κορυφές source και
+// target, ή κενή λίστα αν δεν υπάρχει κανένα μονοπάτι. Η λίστα δημιουργείται σε
+// κάθε κληση και είναι ευθύνη του χρήστη να κάνει list_destroy.
 
 List graph_shortest_path(Graph graph, Pointer source, Pointer target);
 
@@ -72,9 +75,7 @@ void graph_destroy(Graph graph);
 
 //// Για την περίπτωση που ο γράφος χρησιμοποιεί πίνακα κατακερματισμού
 
-// Τύπος συνάρτησης κατακερματισμού
-
-typedef uint (*HashFunc)(Pointer);
+#include "ADTMap.h"	// for HashFunc type
 
 // Ορίζει τη συνάρτηση κατακερματισμού hash για το συγκεκριμένο γράφο.
 // Πρέπει να κληθεί μετά την graph_create και πριν από οποιαδήποτε άλλη συνάρτηση.
