@@ -2,7 +2,7 @@
 //
 // ADT Graph
 //
-// Abstract μη κατευθυνόμενος γράφος με βάρη.
+// Abstract μη κατευθυνόμενος γράφος με (μη αρνητικά) βάρη.
 //
 ////////////////////////////////////////////////////////////////////////
 
@@ -20,9 +20,9 @@ typedef struct graph* Graph;
 typedef void (*GraphVisitFunc)(Graph graph, Pointer value);
 
 
-// Δημιουργεί και επιστρέφει ένα γράφο, στον οποίο τα στοιχεία συγκρίνονται με βάση
-// τη συνάρτηση compare.
-// Αν destroy_vertex != NULL, τότε καλείται destroy_vertex(vertex) κάθε φορά που αφαιρείται μια κορυφή.
+// Δημιουργεί και επιστρέφει ένα γράφο, στον οποίο τα στοιχεία (οι κορυφές)
+// συγκρίνονται με βάση τη συνάρτηση compare. Αν destroy_vertex != NULL, τότε
+// καλείται destroy_vertex(vertex) κάθε φορά που αφαιρείται μια κορυφή.
 
 Graph graph_create(CompareFunc compare, DestroyFunc destroy_vertex);
 
@@ -30,7 +30,7 @@ Graph graph_create(CompareFunc compare, DestroyFunc destroy_vertex);
 
 int graph_size(Graph graph);
 
-// Προσθέτει μια κορυφή στο γράφο
+// Προσθέτει μια κορυφή στο γράφο.
 
 void graph_insert_vertex(Graph graph, Pointer vertex);
 
@@ -39,21 +39,21 @@ void graph_insert_vertex(Graph graph, Pointer vertex);
 
 List graph_get_vertices(Graph graph);
 
-// Διαγράφει μια κορυφή από τον γράφο
+// Διαγράφει μια κορυφή από τον γράφο (αν υπάρχουν ακμές διαγράφονται επίσης).
 
 void graph_remove_vertex(Graph graph, Pointer vertex);
 
-// Προσθέτει μια ακμή με βάρος weight στο γράφο
+// Προσθέτει μια ακμή με βάρος weight στο γράφο.
 
-void graph_insert_edge(Graph graph, Pointer vertex1, Pointer vertex2, int weight);
+void graph_insert_edge(Graph graph, Pointer vertex1, Pointer vertex2, uint weight);
 
-// Αφαιρεί μια ακμή από το γράφο
+// Αφαιρεί μια ακμή από το γράφο.
 
 void graph_remove_edge(Graph graph, Pointer vertex1, Pointer vertex2);
 
-// Επιστρέφει το βάρος της ακμής ανάμεσα στις δύο κορυφές, ή INT_MAX αν δεν είναι γειτονικές.
+// Επιστρέφει το βάρος της ακμής ανάμεσα στις δύο κορυφές, ή UINT_MAX αν δεν είναι γειτονικές.
 
-int graph_get_weight(Graph graph, Pointer vertex1, Pointer vertex2);
+uint graph_get_weight(Graph graph, Pointer vertex1, Pointer vertex2);
 
 // Επιστρέφει λίστα με τους γείτονες μιας κορυφής. Η λίστα δημιουργείται σε κάθε
 // κληση και είναι ευθύνη του χρήστη να κάνει list_destroy.
@@ -66,7 +66,7 @@ List graph_get_adjacent(Graph graph, Pointer vertex);
 
 List graph_shortest_path(Graph graph, Pointer source, Pointer target);
 
-// Ελευθερώνει όλη τη μνήμη που δεσμεύει το γράφος.
+// Ελευθερώνει όλη τη μνήμη που δεσμεύει ο γράφος.
 // Οποιαδήποτε λειτουργία πάνω στο γράφο μετά το destroy είναι μη ορισμένη.
 
 void graph_destroy(Graph graph);
@@ -77,7 +77,7 @@ void graph_destroy(Graph graph);
 
 #include "ADTMap.h"	// for HashFunc type
 
-// Ορίζει τη συνάρτηση κατακερματισμού hash για το συγκεκριμένο γράφο.
+// Ορίζει τη συνάρτηση κατακερματισμού hash_func για το συγκεκριμένο γράφο.
 // Πρέπει να κληθεί μετά την graph_create και πριν από οποιαδήποτε άλλη συνάρτηση.
 
 void graph_set_hash_function(Graph graph, HashFunc hash_func);
