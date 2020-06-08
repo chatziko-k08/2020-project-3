@@ -21,7 +21,7 @@ struct record {
 	String name;		// Όνομά
 	String disease;		// Ασθένεια
 	String country;		// Χώρα
-	Date date;			// Ημερομηνία, σε μορφή YYYY-DD-MM
+	Date date;			// Ημερομηνία, σε μορφή YYYY-MM-DD
 };
 typedef struct record* Record;
 

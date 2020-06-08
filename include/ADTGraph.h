@@ -16,8 +16,6 @@
 
 typedef struct graph* Graph;
 
-// Δείκτης σε συνάρτηση που επισκέπτεται τα στoιχεία του γράφου
-typedef void (*GraphVisitFunc)(Graph graph, Pointer value);
 
 
 // Δημιουργεί και επιστρέφει ένα γράφο, στον οποίο τα στοιχεία (οι κορυφές)
